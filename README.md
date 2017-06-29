@@ -25,3 +25,13 @@ On my system I have this:
 To enable the module you'll need to run this, post-boot:
 
     # echo 1 > /proc/sys/kernel/can-exec/enabled
+
+
+## Documentation
+
+I wrote a couple of blog posts which might provide more background,
+and they are listed below (in order oldest to most recent):
+
+* https://blog.steve.fi/so_i_accidentally_wrote_a_linux_security_module.html
+* https://blog.steve.fi/linux_security_modules__round_two_.html
+* https://blog.steve.fi/yet_more_linux_security_module_craziness___.html
