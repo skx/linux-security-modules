@@ -3,12 +3,12 @@ Linux Security Modules
 
 A collection of three simple linux security modules, more for learning and experimentation than for serious use.
 
-* [whitelist](whitelist/)
+* [whitelist](security/whitelist/)
    * Only allow execution of commands with xattr present.
-* [hashcheck](hashcheck/)
+* [hashcheck](security/hashcheck/)
    * Only allow execution of commands with xattr containing valid SHA1sum of binaries.
 
-Finally the more serious module [can_exec](can_exec) which invokes a user-space helper to decide if commands can be executed.
+Finally the more serious module [can_exec](security/can_exec/) which invokes a user-space helper to decide if commands can be executed.
 
 On my system I have this:
 
