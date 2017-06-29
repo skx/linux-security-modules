@@ -10,8 +10,3 @@ to non-root users, unless:
 There is some back-story in the following blog-post:
 
 * https://blog.steve.fi/linux_security_modules__round_two_.html
-
-This module is available as a complete (github) pull-request against
-the Linux kernel here:
-
-* https://github.com/skx/linux/pull/1
