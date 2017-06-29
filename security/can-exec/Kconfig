@@ -7,8 +7,7 @@ config SECURITY_CAN-EXEC
 	select SECURITY_NETWORK
 	select SRCU
 	select BUILD_BIN2C
-	default n
+	default y
 	help
 	  This selects an access control module which invokes userspace.
           Binaries will only be permitted if /sbin/can-exec returns 0.
-
