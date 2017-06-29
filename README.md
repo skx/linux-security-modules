@@ -8,7 +8,7 @@ A collection of three simple linux security modules, more for learning and exper
 * [hashcheck](security/hashcheck/)
    * Only allow execution of commands with xattr containing valid SHA1sum of binaries.
 
-Finally the more serious module [can_exec](security/can_exec/) which invokes a user-space helper to decide if commands can be executed.
+Finally the more serious module [can-exec](security/can-exec/) which invokes a user-space helper to decide if commands can be executed.
 
 On my system I have this:
 
