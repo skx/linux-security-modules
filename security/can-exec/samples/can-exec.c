@@ -21,7 +21,7 @@
 int main(int argc, char *argv[])
 {
     //
-    // Ensure arguments are sane.
+    // Ensure we have the correct number of arguments.
     //
     if (argc != 3)
     {
@@ -30,20 +30,32 @@ int main(int argc, char *argv[])
     }
 
     //
+    // First argument should be 100% numeric.
+    //
+    for (int i = 0; i < strlen(argv[1]); i++)
+    {
+        if ((argv[1][i] < '0') ||
+                (argv[1][i] > '9'))
+        {
+            fprintf(stderr, "Invalid initial argument\n");
+            return -1;
+        }
+    }
+
+
+    //
     // Get the UID + program from the command-line arguments.
     //
-    uid_t uid = atoi(argv[1]);
-    char *prg = argv[2];
+    uid_t uid      = atoi(argv[1]);
+    char *prg      = argv[2];
+    size_t prg_len = strlen(prg);
+
 
     //
     // Get the username
     //
-    struct passwd *pwd;
-    pwd = getpwuid(uid);
+    struct passwd *pwd = getpwuid(uid);
 
-    //
-    // If the username-conversion failed then we'll abort
-    //
     if (pwd == NULL)
     {
         fprintf(stderr, "Failed to convert UID %d to username\n", uid);
@@ -80,6 +92,8 @@ int main(int argc, char *argv[])
              "/etc/can-exec/%s.conf", pwd->pw_name);
 
     //
+    // Open the configuration-file.
+    //
     FILE* fp = fopen(filename, "r");
 
     if (! fp)
@@ -93,7 +107,7 @@ int main(int argc, char *argv[])
     //
     char buffer[255];
 
-    while (fgets(buffer, 255, (FILE*) fp))
+    while (fgets(buffer, sizeof(buffer) - 1, (FILE*) fp))
     {
         //
         // Strip out newlines
@@ -105,9 +119,15 @@ int main(int argc, char *argv[])
                 buffer[i] = '\0';
 
         //
+        // Skip lines which are comments.
+        //
+        if (buffer[0] == '#')
+            continue;
+
+        //
         // Does the command appear in the file?
         //
-        if (strcmp(prg, buffer) == 0)
+        if (strncmp(prg, buffer, prg_len) == 0)
         {
             fprintf(stderr, "Allowing execution of command\n");
             fclose(fp);
