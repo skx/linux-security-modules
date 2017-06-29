@@ -1,0 +1,15 @@
+config SECURITY_HASH_CHECK
+	bool "Hash-Checking Security Module"
+	depends on SECURITY
+	depends on NET
+	select SECURITYFS
+	select SECURITY_PATH
+	select SECURITY_NETWORK
+	select SRCU
+	select BUILD_BIN2C
+	default n
+	help
+	  This selects an attr-based access control.
+          Binaries will only be permitted to be executed
+          if there is a corresponding hash digest stored
+          in the extended attribute.
