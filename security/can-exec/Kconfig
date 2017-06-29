@@ -1,4 +1,4 @@
-config SECURITY_CAN-EXEC
+config SECURITY_CAN_EXEC
 	bool "can-exec Security Module"
 	depends on SECURITY
 	depends on NET
