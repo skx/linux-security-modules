@@ -4,20 +4,25 @@ can-exec
 This is a LSM in which the kernel calls a user-mode helper to decide
 if binaries should be executed.
 
-Build this as you would expect then:
+Every time a command is to be executed the kernel will invoke:
+
+    /sbin/can-exec $UID $COMMAND
+
+Where the arguments are the UID of the invoking user, and the command
+they're trying to execute.  If the user-space binary exits with a return-code
+of zero the execution will be permitted, otherwise it will be denied.
+
+
+
+Installation & Configuration
+----------------------------
+
+Build the kernel with this support enabled, and then you'll need to
+configure the user-space side.
 
 * Install `/sbin/can-exec` from the `samples/` directory.
    * This will be invoked to decide if (non-root) users can execute binaries.
-* Enable the module.
-   * `echo 1 > /proc/sys/kernel/can-exec/enabled`
-
-
-Configuration
--------------
-
-The user-space helper will be executed to determine whether a command
-can be executed - and that will read a per-user configuration file to
-make the choice.
+   * The sample implementation will read configuration files beneath `/etc/can-exec`, but you could rewrite it to only allow execution of commands between specific times of the day, or something entirely different!
 
 For example I have this on my system:
 
@@ -41,10 +46,13 @@ That means:
    * `/usr/bin/id`
    * `/usr/bin/uptime`
 
-`root` is implicitly allowed to execute everything.
+(And `root` is allowed to execute everything.)
 
-As the user-space executable is called on-demand changes you make to the
-configuration files will immediately take effect.
+Once the user-space binary is in-place you'll need to enable the enforcement
+by running:
+
+   echo 1 > /proc/sys/kernel/can-exec/enabled
+
 
 Links
 -----
