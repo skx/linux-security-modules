@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     fprintf(stderr, "Testing if UID %d <%s> can exec %s\n", uid, pwd->pw_name, prg);
 
     //
-    // This won't even get used, but for clarity
+    // Root can execute everything.
     //
     if (uid == 0)
     {
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 
     if (! fp)
     {
-        fprintf(stderr, "Configuration file not found - %s - denying\n", filename);
+        fprintf(stderr, "Failed to open - %s - denying execution.\n", filename);
         return 0;
     }
 
@@ -112,9 +112,7 @@ int main(int argc, char *argv[])
         //
         // Strip out newlines
         //
-        int i;
-
-        for (i = 0; i < strlen(buffer); i++)
+        for (int i = 0; i < strlen(buffer); i++)
             if (buffer[i] == '\r' || buffer[i] == '\n')
                 buffer[i] = '\0';
 
@@ -125,20 +123,22 @@ int main(int argc, char *argv[])
             continue;
 
         //
-        // Does the command appear in the file?
+        // Does the command the user is trying to execute
+        // match this line?
         //
         if (strncmp(prg, buffer, prg_len) == 0)
         {
-            fprintf(stderr, "Allowing execution of command\n");
+            fprintf(stderr, "Allowing execution of command.\n");
             fclose(fp);
             return 0;
         }
     }
 
     //
-    // If we reached here we have no match, so deny.
+    // If we reached here we have no match, so the execution
+    // will be denied.
     //
-    fprintf(stderr, "Denying execution of command - no match found\n");
+    fprintf(stderr, "Denying execution of command - no match found.\n");
     fclose(fp);
     closelog();
     return -1;
