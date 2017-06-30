@@ -21,10 +21,10 @@ Build the kernel with this support enabled, and then you'll need to
 configure the user-space side.
 
 * Install `/sbin/can-exec` from the `samples/` directory.
-   * This will be invoked to decide if (non-root) users can execute binaries.
+   * This will be invoked to decide if users can execute binaries.
    * The sample implementation will read configuration files beneath `/etc/can-exec`, but you could rewrite it to only allow execution of commands between specific times of the day, or something entirely different!
 
-For example I have this on my system:
+I have these configuration-files setup upon my system:
 
       root@kernel:~# cat /etc/can-exec/redis.conf
       /usr/bin/redis-server
@@ -46,12 +46,11 @@ That means:
    * `/usr/bin/id`
    * `/usr/bin/uptime`
 
-(And `root` is allowed to execute everything.)
 
 Once the user-space binary is in-place you'll need to enable the enforcement
 by running:
 
-   echo 1 > /proc/sys/kernel/can-exec/enabled
+     echo 1 > /proc/sys/kernel/can-exec/enabled
 
 
 Links
