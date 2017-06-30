@@ -7,8 +7,10 @@ A collection of three simple linux security modules, more for learning and exper
    * Only allow execution of commands with xattr present.
 * [hashcheck](security/hashcheck/)
    * Only allow execution of commands with xattr containing valid SHA1sum of binaries.
-
-Finally the more serious module [can-exec](security/can-exec/) which invokes a user-space helper to decide if commands can be executed.
+* [can-exec](security/can-exec)
+   * The only "serious" module in this repository.
+   * Invokes the user-space helper `/sbin/can-exec` to determine whether a user can execute a specific command.
+   * Allows policies to be written and changed on-demand.
 
 
 ## Documentation
@@ -22,10 +24,10 @@ and they are listed below (in order oldest to most recent):
 
 ## Installation
 
-The code has only been tested on linux-staging, which as of today is
+The code has only been tested on `linux-staging`, which as of today is
 version 4.12.0-rc6.
 
 Copy the contents of `security/` into your local Kernel-tree, and run
 `make menuconfig`.
 
-**NOTE**: Over time the two files `Kconfig` & `Makefile` might need resyncing from master - but you can look for mentions of `CAN_EXEC`, `HASH_CHECK`, & `WHITELIST` to see what I've done to add the modules.
+**NOTE**: Over time the two files `security/Kconfig` & `security/Makefile` might need resyncing from master - but you can look for mentions of `CAN_EXEC`, `HASH_CHECK`, & `WHITELIST` to see what I've done to add the modules.
