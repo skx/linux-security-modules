@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     //
     if (argc != 3)
     {
-        fprintf(stderr, "Invalid arguments");
+        fprintf(stderr, "Invalid arguments\n");
         exit(-1);
     }
 
