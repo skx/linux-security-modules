@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     if (! fp)
     {
         fprintf(stderr, "Failed to open - %s - denying execution.\n", filename);
-        return 0;
+        return -1;
     }
 
     //
