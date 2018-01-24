@@ -24,8 +24,7 @@ and they are listed below (in order oldest to most recent):
 
 ## Installation
 
-The code has only been tested on `linux-staging`, which as of today is
-version 4.12.0-rc6.
+The code has been tested upon kernels as recent as 4.14.15.
 
 Copy the contents of `security/` into your local Kernel-tree, and run
 `make menuconfig`.
