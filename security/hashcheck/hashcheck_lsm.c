@@ -183,7 +183,7 @@ static int hashcheck_bprm_check_security(struct linux_binprm *bprm)
         return 0;
 
     // Allocate some RAM to hold the digest result
-    digest = (u8*)kmalloc(SHA1_DIGEST_SIZE, GFP_TEMPORARY);
+    digest = (u8*)kmalloc(SHA1_DIGEST_SIZE, GFP_KERNEL);
 
     if (!digest)
     {
@@ -200,7 +200,7 @@ static int hashcheck_bprm_check_security(struct linux_binprm *bprm)
     //
     // Now allocate a second piece of RAM to store the human-readable hash.
     //
-    hash = (char*)kmalloc(PAGE_SIZE, GFP_TEMPORARY);
+    hash = (char*)kmalloc(PAGE_SIZE, GFP_KERNEL);
 
     if (!hash)
     {
