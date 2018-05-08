@@ -105,7 +105,7 @@ static int can_exec_bprm_check_security_usermode(struct linux_binprm *bprm)
     // The command we'll be executing.
     //
     argv[0] = "/sbin/can-exec";                    // helper
-    argv[1] = (char *)kmalloc(10, GFP_TEMPORARY);  // UID
+    argv[1] = (char *)kmalloc(10, GFP_KERNEL);     // UID
     argv[2] = NULL;                                // CMD
     argv[3] = NULL;                                // Terminator
 
@@ -137,7 +137,7 @@ static int can_exec_bprm_check_security_usermode(struct linux_binprm *bprm)
 
         if (path != NULL)
         {
-            argv[2] = kstrdup(path, GFP_TEMPORARY);
+            argv[2] = kstrdup(path, GFP_KERNEL);
             kfree(path_buff);
         }
         else
@@ -146,6 +146,7 @@ static int can_exec_bprm_check_security_usermode(struct linux_binprm *bprm)
 
             // avoid leaking
             kfree(argv[1]);
+            kfree(path_buff);
             return -EPERM;
         }
     }
