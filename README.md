@@ -8,7 +8,7 @@ A collection of three simple linux security modules, more for learning and exper
 * [hashcheck](security/hashcheck/)
    * Only allow execution of commands with xattr containing valid SHA1sum of binaries.
 * [can-exec](security/can-exec)
-   * The only "serious" module in this repository.
+   * The only __serious__ module in this repository.
    * Invokes the user-space helper `/sbin/can-exec` to determine whether a user can execute a specific command.
    * Allows policies to be written and changed on-demand.
 
@@ -24,7 +24,7 @@ and they are listed below (in order oldest to most recent):
 
 ## Installation
 
-The code has been tested upon kernels as recent as 4.14.15.
+The code has been tested upon kernels as recent as 4.16.17.
 
 Copy the contents of `security/` into your local Kernel-tree, and run
 `make menuconfig`.
