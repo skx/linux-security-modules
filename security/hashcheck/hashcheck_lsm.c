@@ -279,7 +279,7 @@ out:
 /*
  * The hooks we wish to be installed.
  */
-static struct security_hook_list hashcheck_hooks[] =
+static struct security_hook_list hashcheck_hooks[] __lsm_ro_after_init =
 {
     LSM_HOOK_INIT(bprm_check_security, hashcheck_bprm_check_security),
 };

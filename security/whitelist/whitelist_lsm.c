@@ -24,7 +24,7 @@
  * that for you, in a simple way.
  *
  * Steve
- * -- 
+ * --
  *
  */
 
@@ -70,7 +70,7 @@ static int whitelist_bprm_check_security(struct linux_binprm *bprm)
 /*
  * The hooks we wish to be installed.
  */
-static struct security_hook_list whitelist_hooks[] = {
+static struct security_hook_list whitelist_hooks[] __lsm_ro_after_init = {
 	LSM_HOOK_INIT(bprm_check_security, whitelist_bprm_check_security),
 };
 

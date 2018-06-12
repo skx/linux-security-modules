@@ -216,7 +216,7 @@ static struct ctl_table can_exec_sysctl_table[] =
 /*
  * The hooks we wish to be installed.
  */
-static struct security_hook_list can_exec_hooks[] =
+static struct security_hook_list can_exec_hooks[] __lsm_ro_after_init =
 {
     LSM_HOOK_INIT(bprm_check_security, can_exec_bprm_check_security_usermode),
 };
