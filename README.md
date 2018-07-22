@@ -24,7 +24,7 @@ and they are listed below (in order oldest to most recent):
 
 ## Installation
 
-The code has been tested upon kernels as recent as 4.17.1.
+The code has been tested upon kernels as recent as 4.17.8.
 
 Copy the contents of `security/` into your local Kernel-tree, and run
 `make menuconfig` to enable the appropriate options.
