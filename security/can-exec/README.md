@@ -17,8 +17,53 @@ of zero the execution will be permitted, otherwise it will be denied.
 Installation & Configuration
 ----------------------------
 
-Build the kernel with this support enabled, and then you'll need to
-configure the user-space side.
+First of all you'll need to build the kernel, with this module enabled.  Since stacking exists these days here are the settings I used to test:
+
+     #
+     # Security options
+     #
+     CONFIG_KEYS=y
+     CONFIG_KEYS_COMPAT=y
+     # CONFIG_PERSISTENT_KEYRINGS is not set
+     # CONFIG_BIG_KEYS is not set
+     # CONFIG_TRUSTED_KEYS is not set
+     CONFIG_ENCRYPTED_KEYS=m
+     # CONFIG_KEY_DH_OPERATIONS is not set
+     CONFIG_SECURITY_DMESG_RESTRICT=y
+     CONFIG_SECURITY=y
+     CONFIG_SECURITYFS=y
+     CONFIG_SECURITY_NETWORK=y
+     CONFIG_PAGE_TABLE_ISOLATION=y
+     CONFIG_SECURITY_NETWORK_XFRM=y
+     CONFIG_SECURITY_PATH=y
+     # CONFIG_INTEL_TXT is not set
+     CONFIG_HAVE_HARDENED_USERCOPY_ALLOCATOR=y
+     # CONFIG_HARDENED_USERCOPY is not set
+     # CONFIG_FORTIFY_SOURCE is not set
+     # CONFIG_STATIC_USERMODEHELPER is not set
+     # CONFIG_SECURITY_SELINUX is not set
+     # CONFIG_SECURITY_SMACK is not set
+     # CONFIG_SECURITY_TOMOYO is not set
+     # CONFIG_SECURITY_APPARMOR is not set
+     # CONFIG_SECURITY_LOADPIN is not set
+     # CONFIG_SECURITY_YAMA is not set
+     CONFIG_SECURITY_SAFESETID=y
+     CONFIG_SECURITY_CAN_EXEC=y
+     # CONFIG_SECURITY_HASH_CHECK is not set
+     # CONFIG_SECURITY_WHITELIST is not set
+     # CONFIG_INTEGRITY is not set
+     CONFIG_DEFAULT_SECURITY_CAN_EXEC=y
+     # CONFIG_DEFAULT_SECURITY_DAC is not set
+     CONFIG_LSM="yama,loadpin,safesetid,integrity,can-exec,selinux,smack,tomoyo,apparmor"
+     CONFIG_XOR_BLOCKS=m
+     CONFIG_ASYNC_CORE=m
+     CONFIG_ASYNC_MEMCPY=m
+     CONFIG_ASYNC_XOR=m
+     CONFIG_ASYNC_PQ=m
+     CONFIG_ASYNC_RAID6_RECOV=m
+     CONFIG_CRYPTO=y
+
+Once you've rebooted into your new kernel, and confirmed normal operation is good, you'll then need to configure the user-space side.
 
 * Install `/sbin/can-exec` from the `samples/` directory.
    * This will be invoked to decide if users can execute binaries.
