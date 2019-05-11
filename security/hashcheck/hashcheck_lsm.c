@@ -295,4 +295,11 @@ static int __init hashcheck_init(void)
     return 0;
 }
 
-security_initcall(hashcheck_init);
+
+/*
+ * Ensure the initialization code is called.
+ */
+DEFINE_LSM(hashcheck_init) = {
+        .init = hashcheck_init,
+        .name = "hashcheck",
+};
