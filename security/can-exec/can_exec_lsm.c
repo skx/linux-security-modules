@@ -236,4 +236,11 @@ static int __init can_exec_init(void)
     return 0;
 }
 
-security_initcall(can_exec_init);
+
+/*
+ * Ensure the initialization code is called.
+ */
+DEFINE_LSM(can_exec_init) = {
+        .init = can_exec_init,
+        .name = "can-exec",
+};
