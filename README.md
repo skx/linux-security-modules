@@ -24,12 +24,11 @@ and they are listed below (in order oldest to most recent):
 
 ## Installation
 
-The code has been tested upon kernels as recent as 4.17.8.
+The code has been tested upon kernels as recent as 5.1
 
-Copy the contents of `security/` into your local Kernel-tree, and run
-`make menuconfig` to enable the appropriate options.
+Copy the contents of `security/` into your local Kernel-tree, and run `make menuconfig` to enable the appropriate options.
 
-**NOTE**: Over time the two files `security/Kconfig` & `security/Makefile` might need resyncing from master - but you can look for mentions of `CAN_EXEC`, `HASH_CHECK`, & `WHITELIST` to see what I've done to add the modules.
+**NOTE**: Over time the two files `security/Kconfig` & `security/Makefile` might need resyncing with the base versions installed with the Linux source-tree, you can look for mentions of `CAN_EXEC`, `HASH_CHECK`, & `WHITELIST` to see what I've done to add the modules.
 
 For a Debian GNU/Linux host, building a recent kernel, these are the dependencies you'll need to install:
 

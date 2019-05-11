@@ -4,11 +4,11 @@ can-exec
 This is a LSM in which the kernel calls a user-mode helper to decide
 if binaries should be executed.
 
-Every time a command is to be executed the kernel will invoke:
+Every time a command is to be executed the kernel will invoke a user-space helper:
 
     /sbin/can-exec $UID $COMMAND
 
-Where the arguments are the UID of the invoking user, and the command
+The arguments supplied are the UID of the invoking user, and the command
 they're trying to execute.  If the user-space binary exits with a return-code
 of zero the execution will be permitted, otherwise it will be denied.
 
@@ -51,6 +51,21 @@ Once the user-space binary is in-place you'll need to enable the enforcement
 by running:
 
      echo 1 > /proc/sys/kernel/can-exec/enabled
+
+
+Testing
+-------
+
+To test that the module is enabled you'll want to run:
+
+    $ echo $(cat /sys/kernel/security/lsm)
+    capability,safesetid,can_exec
+
+If you see `can_exec` listed, and you get output from this command you're good:
+
+    $ dmesg | grep LSM
+    [    0.282365] LSM: Security Framework initializing
+    [    0.283323] LSM initialized: can_exec
 
 
 Links
