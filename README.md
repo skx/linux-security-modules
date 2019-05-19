@@ -1,16 +1,25 @@
 Linux Security Modules
 ----------------------
 
-A collection of three simple linux security modules, more for learning and experimentation than for serious use.
+This repository contains a simple collection of linux security modules, which were written as a learning/experimentation-process.
+
+## Modules
+
+There are three modules contained within this repository, two of which are simple tests and one of which is more "real".
+
+These are test-modules:
 
 * [whitelist](security/whitelist/)
-   * Only allow execution of commands with xattr present.
+   * Only allow execution of binaries which have a specific `xattr` present.
 * [hashcheck](security/hashcheck/)
-   * Only allow execution of commands with xattr containing valid SHA1sum of binaries.
+   * Only allow execution of commands with `xattr` containing valid SHA1sum of binaries.
+   * This builds upon the previous module.
+
+This is the only "real" module:
+
 * [can-exec](security/can-exec)
-   * The only __serious__ module in this repository.
-   * Invokes the user-space helper `/sbin/can-exec` to determine whether a user can execute a specific command.
-   * Allows policies to be written and changed on-demand.
+   * The the user-space helper `/sbin/can-exec` is invoked to determine whether a user can execute a specific command.
+   * Because user-space controls execution policies can be written/updated dynamically.
 
 
 ## Documentation
@@ -22,7 +31,7 @@ and they are listed below (in order oldest to most recent):
 * https://blog.steve.fi/linux_security_modules__round_two_.html
 * https://blog.steve.fi/yet_more_linux_security_module_craziness___.html
 
-## Installation
+## Compilation & Installation
 
 The code has been tested upon kernels as recent as 5.1
 
