@@ -14,10 +14,9 @@ of zero the execution will be permitted, otherwise it will be denied.
 
 
 
-Installation & Configuration
-----------------------------
+## Installation & Configuration
 
-First of all you'll need to build the kernel, with this module enabled.  Since stacking exists these days here are the settings I used to test:
+First of all you'll need to build the kernel with this module enabled.  Since there have been changes to the Kernel "recently", to allow LSM module-stacking, these are the explicit settings I used for my own tests:
 
      #
      # Security options
@@ -63,7 +62,26 @@ First of all you'll need to build the kernel, with this module enabled.  Since s
      CONFIG_ASYNC_RAID6_RECOV=m
      CONFIG_CRYPTO=y
 
-Once you've rebooted into your new kernel, and confirmed normal operation is good, you'll then need to configure the user-space side.
+
+## Kernel Testing
+
+Once you've rebooted into your new kernel you should be able to see that the module is compiled successfully and available by running:
+
+    $ echo $(cat /sys/kernel/security/lsm)
+    capability,safesetid,can_exec
+
+If you see `can_exec` listed, and you get output from this command you're good:
+
+    $ dmesg | grep LSM
+    [    0.282365] LSM: Security Framework initializing
+    [    0.283323] LSM initialized: can_exec
+
+Finally you should also see the file `/proc/sys/kernel/can-exec/enabled` exists, and will have the contents `0` - as the module is not yet enabled.
+
+
+## Setup User-Space
+
+The goal of this module is that the kernel will invoke a user-space helper whenever a binary is executed.  The next step is thus to make that binary available.
 
 * Install `/sbin/can-exec` from the `samples/` directory.
    * This will be invoked to decide if users can execute binaries.
@@ -91,30 +109,13 @@ That means:
    * `/usr/bin/id`
    * `/usr/bin/uptime`
 
-
-Once the user-space binary is in-place you'll need to enable the enforcement
+Once the user-space binary is in-place you can enable the enforcement
 by running:
 
      echo 1 > /proc/sys/kernel/can-exec/enabled
 
 
-Testing
--------
-
-To test that the module is available you'll want to run:
-
-    $ echo $(cat /sys/kernel/security/lsm)
-    capability,safesetid,can_exec
-
-If you see `can_exec` listed, and you get output from this command you're good:
-
-    $ dmesg | grep LSM
-    [    0.282365] LSM: Security Framework initializing
-    [    0.283323] LSM initialized: can_exec
-
-
-Links
------
+## Links
 
 There is some back-story in the following blog-post:
 
