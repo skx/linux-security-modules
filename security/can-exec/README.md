@@ -101,7 +101,7 @@ by running:
 Testing
 -------
 
-To test that the module is enabled you'll want to run:
+To test that the module is available you'll want to run:
 
     $ echo $(cat /sys/kernel/security/lsm)
     capability,safesetid,can_exec
