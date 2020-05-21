@@ -114,10 +114,13 @@ That means:
    * `/usr/bin/id`
    * `/usr/bin/uptime`
 
-Once the user-space binary is in-place you can enable the enforcement
-by running:
+Once the user-space binary is in-place you can enable the enforcement by running the following command:
 
-     echo 1 > /proc/sys/kernel/can-exec/enabled
+```
+root@stretch:~# echo 1 > /proc/sys/kernel/can-exec/enabled
+```
+
+**NOTE**: As a result of #11 you cannot disable the module, once enabled.
 
 
 ## Links
