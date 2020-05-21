@@ -1,9 +1,13 @@
-Linux Security Modules
-----------------------
+# Linux Security Modules
 
 This repository contains a small collection of linux security modules, which were written as a part of a learning/experimentation process.
 
-## Modules
+The code present has been compiled and tested against the most recent long-term kernel, at the time of writing that is __5.4.22__.
+
+
+
+
+## Included Modules
 
 There are three modules contained within this repository, two of which are simple tests and one of which is more "real".
 
@@ -22,16 +26,24 @@ The following two modules were written as I started the learning-process, and de
    * This builds upon the previous module.
 
 
-## Linux Compatibility & Compilation
 
-The code has been tested upon kernels as recent as 5.4.22.
+
+## Compilation
 
 Copy the contents of `security/` into your local Kernel-tree, and run `make menuconfig` to enable the appropriate options.
 
-**NOTE**: Over time the two files `security/Kconfig` & `security/Makefile` might need resyncing with the base versions installed with the Linux source-tree, you can look for mentions of `CAN_EXEC`, `HASH_CHECK`, & `WHITELIST` to see what I've done to add the modules.
+Further notes are available within the appropriate module subdirectories.
 
-For a Debian GNU/Linux host, building a recent kernel, these are the dependencies you'll need to install:
+For a Debian GNU/Linux host, these are the kernel build-dependencies you'll need to install, if they're not already present:
 
       # apt-get install flex bison bc libelf-dev libssl-dev \
                         build-essential make libncurses5-dev \
                         git-core
+
+
+
+### Tracking Kernel Changes
+
+As new kernels are released it is possible the two files `security/Kconfig` & `security/Makefile` might need resyncing with the base versions installed with the Linux source-tree.
+
+You should be able to update them just by running `diff` and copying any lines referring to the modules `CAN_EXEC`, `HASH_CHECK`, & `WHITELIST` into place.
