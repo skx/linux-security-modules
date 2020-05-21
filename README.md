@@ -24,7 +24,7 @@ This is the only "real" module:
 
 ## Linux Compatibility & Compilation
 
-The code has been tested upon kernels as recent as 5.1
+The code has been tested upon kernels as recent as 5.4.22.
 
 Copy the contents of `security/` into your local Kernel-tree, and run `make menuconfig` to enable the appropriate options.
 
