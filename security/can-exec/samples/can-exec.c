@@ -79,6 +79,7 @@ int main(int argc, char *argv[])
     if (uid == 0)
     {
         fprintf(stderr, "root can execute everything\n");
+        syslog(LOG_NOTICE, "root can execute everything");
         return 0;
     }
 
@@ -129,6 +130,7 @@ int main(int argc, char *argv[])
         if (strncmp(prg, buffer, prg_len) == 0)
         {
             fprintf(stderr, "Allowing execution of command.\n");
+            syslog(LOG_NOTICE, "Allowing execution of command");
             fclose(fp);
             return 0;
         }
@@ -139,6 +141,7 @@ int main(int argc, char *argv[])
     // will be denied.
     //
     fprintf(stderr, "Denying execution of command - no match found.\n");
+    syslog(LOG_NOTICE, "Denying execution of command - no match found.");
     fclose(fp);
     closelog();
     return -1;
