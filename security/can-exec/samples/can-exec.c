@@ -11,12 +11,37 @@
  */
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
+
+
+// Log a message to STDOUT for testing, and to syslog for production use.
+void logger( const char* format, ...) {
+
+    char buf[256];
+    va_list arg_ptr;
+
+    // format
+    va_start(arg_ptr, format);
+    vsnprintf(buf, sizeof(buf)-1, format, arg_ptr);
+    va_end(arg_ptr);
+
+    // paranoia means we should ensure we're terminated.
+    buf[sizeof(buf)] = '\0';
+
+    // console output
+    fprintf(stderr, buf);
+    fprintf(stderr, "\n");
+
+    // syslog
+    syslog(LOG_NOTICE, buf);
+
+}
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +50,7 @@ int main(int argc, char *argv[])
     //
     if (argc != 3)
     {
-        fprintf(stderr, "Invalid arguments\n");
+        logger("Invalid argument count.");
         exit(-1);
     }
 
@@ -35,9 +60,9 @@ int main(int argc, char *argv[])
     for (int i = 0; i < strlen(argv[1]); i++)
     {
         if ((argv[1][i] < '0') ||
-                (argv[1][i] > '9'))
+            (argv[1][i] > '9'))
         {
-            fprintf(stderr, "Invalid initial argument\n");
+  	    logger("Invalid initial argument.");
             return -1;
         }
     }
@@ -58,28 +83,22 @@ int main(int argc, char *argv[])
 
     if (pwd == NULL)
     {
-        fprintf(stderr, "Failed to convert UID %d to username\n", uid);
+        logger("Failed to convert UID %d to username", uid);
         return -1;
     }
 
     //
-    // Log to syslog the UID + binary
+    // Log the UID, username, and command.
     //
     openlog("can-exec", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
-    syslog(LOG_NOTICE, "UID:%d USER:%s CMD:%s", uid, pwd->pw_name, prg);
-
-    //
-    // For interactive testing.
-    //
-    fprintf(stderr, "Testing if UID %d <%s> can exec %s\n", uid, pwd->pw_name, prg);
+    logger("UID:%d USER:%s CMD:%s", uid, pwd->pw_name, prg);
 
     //
     // Root can execute everything.
     //
     if (uid == 0)
     {
-        fprintf(stderr, "root can execute everything\n");
-        syslog(LOG_NOTICE, "root can execute everything");
+        logger("root can execute everything");
         return 0;
     }
 
@@ -99,7 +118,7 @@ int main(int argc, char *argv[])
 
     if (! fp)
     {
-        fprintf(stderr, "Failed to open - %s - denying execution.\n", filename);
+        logger("Failed to open %s: denying execution.", filename);
         return -1;
     }
 
@@ -127,21 +146,24 @@ int main(int argc, char *argv[])
         // Does the command the user is trying to execute
         // match this line?
         //
+        // TODO
+        //
+        // - We could allow matching regular expressions.
+        // - We could allow matching based on directory
+        //   - e.g. "allow /bin /sbin"
+        //
         if (strncmp(prg, buffer, prg_len) == 0)
         {
-            fprintf(stderr, "Allowing execution of command.\n");
-            syslog(LOG_NOTICE, "Allowing execution of command");
+            logger("allowing execution of command.");
             fclose(fp);
             return 0;
         }
     }
 
     //
-    // If we reached here we have no match, so the execution
-    // will be denied.
+    // If we reached here we have no match, so execution is denied.
     //
-    fprintf(stderr, "Denying execution of command - no match found.\n");
-    syslog(LOG_NOTICE, "Denying execution of command - no match found.");
+    logger("Denying execution of command - no match found.");
     fclose(fp);
     closelog();
     return -1;
