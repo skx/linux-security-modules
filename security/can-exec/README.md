@@ -18,14 +18,11 @@ The arguments supplied are the UID of the invoking user, and the command they're
 First of all you'll need to build the kernel with this module enabled.  Since there have been changes to the Kernel recently, to allow LSM module-stacking, these are the settings I used for my own tests:
 
 ```
-#
 # Security options
 #
 CONFIG_KEYS=y
-CONFIG_KEYS_COMPAT=y
 # CONFIG_KEYS_REQUEST_CACHE is not set
 # CONFIG_PERSISTENT_KEYRINGS is not set
-# CONFIG_BIG_KEYS is not set
 # CONFIG_TRUSTED_KEYS is not set
 # CONFIG_ENCRYPTED_KEYS is not set
 # CONFIG_KEY_DH_OPERATIONS is not set
@@ -53,8 +50,9 @@ CONFIG_SECURITY_CAN_EXEC=y
 # CONFIG_SECURITY_HASH_CHECK is not set
 # CONFIG_SECURITY_WHITELIST is not set
 # CONFIG_INTEGRITY is not set
-CONFIG_DEFAULT_SECURITY_CAN_EXEC=y
-# CONFIG_DEFAULT_SECURITY_DAC is not set
+# CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT is not set
+# CONFIG_DEFAULT_SECURITY_CAN_EXEC is not set
+CONFIG_DEFAULT_SECURITY_DAC=y
 CONFIG_LSM="yama,loadpin,safesetid,integrity,can-exec,selinux,smack,tomoyo,apparmor"
 ```
 
