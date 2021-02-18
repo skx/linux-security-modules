@@ -2,7 +2,7 @@
 
 This repository contains a small collection of linux security modules, which were written as a part of a learning/experimentation process.
 
-The code present has been compiled and tested against the most recent long-term kernel, at the time of writing that is __5.4.22__.
+The code present has been compiled and tested against the most recent long-term kernel, at the time of writing that is __5.10.17__.
 
 
 
