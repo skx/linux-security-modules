@@ -4,6 +4,9 @@ This repository contains a small collection of linux security modules, which wer
 
 The code present has been compiled and tested against the most recent long-term kernel, at the time of writing that is __5.10.17__.
 
+If you want to port this code to a newer kernel, in the future, then the following bug-report is a good overview of how I approach things:
+
+* https://github.com/skx/linux-security-modules/issues/13
 
 
 
