@@ -118,7 +118,7 @@ config INTEL_TXT
 	  it was configured with, especially since they may be responsible for
 	  providing such assurances to VMs and services running on it.
 
-	  See <http://www.intel.com/technology/security/> for more information
+	  See <https://www.intel.com/technology/security/> for more information
 	  about Intel(R) TXT.
 	  See <http://tboot.sourceforge.net> for more information about tboot.
 	  See Documentation/x86/intel_txt.rst for a description of how to enable
@@ -238,7 +238,6 @@ source "security/loadpin/Kconfig"
 source "security/yama/Kconfig"
 source "security/safesetid/Kconfig"
 source "security/lockdown/Kconfig"
-
 source "security/can-exec/Kconfig"
 source "security/hashcheck/Kconfig"
 source "security/whitelist/Kconfig"
@@ -251,9 +250,9 @@ choice
 	default DEFAULT_SECURITY_SMACK if SECURITY_SMACK
 	default DEFAULT_SECURITY_TOMOYO if SECURITY_TOMOYO
 	default DEFAULT_SECURITY_APPARMOR if SECURITY_APPARMOR
-	default DEFAULT_SECURITY_CAN_EXEC if SECURITY_CAN_EXEC
-  	default DEFAULT_SECURITY_HASH_CHECK if SECURITY_HASH_CHECK
-  	default DEFAULT_SECURITY_WHITELIST if SECURITY_WHITELIST
+        default DEFAULT_SECURITY_CAN_EXEC if SECURITY_CAN_EXEC
+        default DEFAULT_SECURITY_HASH_CHECK if SECURITY_HASH_CHECK
+        default DEFAULT_SECURITY_WHITELIST if SECURITY_WHITELIST
 	default DEFAULT_SECURITY_DAC
 
 	help
@@ -277,15 +276,16 @@ choice
 	config DEFAULT_SECURITY_APPARMOR
 		bool "AppArmor" if SECURITY_APPARMOR=y
 
-	config DEFAULT_SECURITY_CAN_EXEC
- 	       bool "can-exec" if SECURITY_CAN_EXEC=y
 
-	config DEFAULT_SECURITY_HASH_CHECK
- 	       bool "hashcheck" if SECURITY_HASH_CHECK=y
+        config DEFAULT_SECURITY_CAN_EXEC
+               bool "can-exec" if SECURITY_CAN_EXEC=y
 
-	config DEFAULT_SECURITY_WHITELIST
- 	       bool "whitelist" if SECURITY_WHITELIST=y
-	       
+        config DEFAULT_SECURITY_HASH_CHECK
+               bool "hashcheck" if SECURITY_HASH_CHECK=y
+
+        config DEFAULT_SECURITY_WHITELIST
+               bool "whitelist" if SECURITY_WHITELIST=y
+               
 	config DEFAULT_SECURITY_DAC
 		bool "Unix Discretionary Access Controls"
 
@@ -293,14 +293,14 @@ endchoice
 
 config LSM
 	string "Ordered list of enabled LSMs"
-	default "lockdown,yama,loadpin,safesetid,integrity,smack,selinux,tomoyo,apparmor" if DEFAULT_SECURITY_SMACK
-	default "lockdown,yama,loadpin,safesetid,integrity,apparmor,selinux,smack,tomoyo" if DEFAULT_SECURITY_APPARMOR
-	default "lockdown,yama,loadpin,safesetid,integrity,tomoyo" if DEFAULT_SECURITY_TOMOYO
-	default "lockdown,yama,loadpin,safesetid,integrity" if DEFAULT_SECURITY_DAC
- 	default "lockdown,yama,loadpin,safesetid,integrity,can-exec" if DEFAULT_SECURITY_CAN_EXEC
- 	default "lockdown,yama,loadpin,safesetid,integrity,hashcheck" if DEFAULT_SECURITY_HASH_CHECK
- 	default "localdown,yama,loadpin,safesetid,integrity,whitelist" if DEFAULT_SECURITY_WHITELIST
-	default "lockdown,yama,loadpin,safesetid,integrity,selinux,smack,tomoyo,apparmor,can-exec,hashcheck,whitelist"
+	default "lockdown,yama,loadpin,safesetid,integrity,smack,selinux,tomoyo,apparmor,bpf" if DEFAULT_SECURITY_SMACK
+	default "lockdown,yama,loadpin,safesetid,integrity,apparmor,selinux,smack,tomoyo,bpf" if DEFAULT_SECURITY_APPARMOR
+	default "lockdown,yama,loadpin,safesetid,integrity,tomoyo,bpf" if DEFAULT_SECURITY_TOMOYO
+	default "lockdown,yama,loadpin,safesetid,integrity,bpf" if DEFAULT_SECURITY_DAC
+        default "lockdown,yama,loadpin,safesetid,integrity,bpf,can-exec" if DEFAULT_SECURITY_CAN_EXEC
+        default "lockdown,yama,loadpin,safesetid,integrity,bpf,hashcheck" if DEFAULT_SECURITY_HASH_CHECK
+        default "localdown,yama,loadpin,safesetid,integrity,bpf,whitelist" if DEFAULT_SECURITY_WHITELIST
+	default "lockdown,yama,loadpin,safesetid,integrity,selinux,smack,tomoyo,apparmor,bpf"
 	help
 	  A comma-separated list of LSMs, in initialization order.
 	  Any LSMs left off this list will be ignored. This can be
